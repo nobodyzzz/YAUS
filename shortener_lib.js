@@ -226,6 +226,29 @@ URLinl = {
   }
 }
 
+ClckRu = {
+	shorten: function(longUrl, useAcct, login, apiKey, callback) {
+		var url = "http://clck.ru/--";
+		var params = {
+			url: longUrl
+		};
+
+		$.ajax({
+			type: 'GET',
+			url: url,
+			data: params,
+			dataType: 'text',
+			timeout: 6000,
+			success: function(data, status){
+				callback(0, data);	
+			},
+			error: function(request, status, error){
+				callback(-1, 'AJAX request failed (bad connection?)');				
+			}
+		});	
+	}
+}
+
 SHORTENERS_BACKEND = {
   bitly: {
     desc: 'bit.ly',
@@ -266,5 +289,10 @@ SHORTENERS_BACKEND = {
     desc: 'URLi.nl',
     baseUrl: 'http://urli.nl/',
     backend: URLinl
+  },
+  clckru: {
+  	desc: 'clck.ru',
+	baseUrl: '',
+	backend: ClckRu
   }
 }
