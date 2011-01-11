@@ -248,6 +248,27 @@ ClckRu = {
 		});	
 	}
 }
+GooGl = {
+	shorten: function(longUrl, useAcct, login, apiKey, callback) {
+        var url = "https://www.googleapis.com/urlshortener/v1/url";
+        var params = '{ "longUrl": "' + longUrl + '" }';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: params,
+            dataType: 'json',
+            contentType: 'application/json',
+            timeout: 6000,
+            success: function(data, status){
+                callback(0, data.id);
+            },
+			error: function(request, status, error){
+				callback(-1, 'AJAX request failed (bad connection?)');				
+			} 
+        });
+    }
+}
 
 SHORTENERS_BACKEND = {
   bitly: {
@@ -294,5 +315,10 @@ SHORTENERS_BACKEND = {
   	desc: 'clck.ru',
 	baseUrl: '',
 	backend: ClckRu
+  },
+  googl: {
+    desc: 'goo.gl',
+    baseUrl: '',
+    backend: GooGl
   }
 }
